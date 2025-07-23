@@ -53,7 +53,7 @@ class FinancialChatbot:
 
     def get_response(self, user_message):
         """Get AI response for user's financial question"""
-        if not self.api_available:
+        if not self.api_available or not self.client:
             return "🔑 **API Key Required**: To use the AI Financial Advisor, please add your Gemini API key to the environment variables. You can get one from https://aistudio.google.com/app/apikey"
         
         try:
@@ -71,7 +71,7 @@ class FinancialChatbot:
 
     def get_financial_analysis(self, financial_data):
         """Analyze financial data and provide insights"""
-        if not self.api_available:
+        if not self.api_available or not self.client:
             return "🔑 **API Key Required**: To use the AI Financial Analysis, please add your Gemini API key to the environment variables."
         
         try:
@@ -103,7 +103,7 @@ class FinancialChatbot:
 
     def explain_calculation(self, calculation_type, inputs, results):
         """Explain financial calculations in simple terms"""
-        if not self.api_available:
+        if not self.api_available or not self.client:
             return "🔑 **API Key Required**: To use the AI Calculation Explanation, please add your Gemini API key to the environment variables."
         
         try:
