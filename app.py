@@ -135,16 +135,16 @@ def show_mortgage_calculator():
     
     with col1:
         st.subheader("Loan Details")
-        home_price = st.number_input("Home Price ($)", min_value=0.0, value=300000.0, step=1000.0)
-        down_payment = st.number_input("Down Payment ($)", min_value=0.0, value=60000.0, step=1000.0)
+        home_price = st.number_input("Home Price (₹)", min_value=0.0, value=2500000.0, step=10000.0)
+        down_payment = st.number_input("Down Payment (₹)", min_value=0.0, value=500000.0, step=10000.0)
         interest_rate = st.number_input("Annual Interest Rate (%)", min_value=0.0, value=6.5, step=0.1)
         loan_term = st.selectbox("Loan Term", [15, 20, 25, 30], index=3)
         
         # Additional costs
         st.subheader("Additional Costs")
-        property_tax = st.number_input("Annual Property Tax ($)", min_value=0.0, value=3600.0, step=100.0)
-        insurance = st.number_input("Annual Home Insurance ($)", min_value=0.0, value=1200.0, step=100.0)
-        pmi = st.number_input("PMI ($/month)", min_value=0.0, value=0.0, step=10.0)
+        property_tax = st.number_input("Annual Property Tax (₹)", min_value=0.0, value=30000.0, step=1000.0)
+        insurance = st.number_input("Annual Home Insurance (₹)", min_value=0.0, value=10000.0, step=1000.0)
+        pmi = st.number_input("PMI (₹/month)", min_value=0.0, value=0.0, step=100.0)
     
     with col2:
         if st.button("Calculate Mortgage", type="primary"):
@@ -181,7 +181,7 @@ def show_loan_calculator():
     col1, col2 = st.columns([1, 1])
     
     with col1:
-        loan_amount = st.number_input("Loan Amount ($)", min_value=0.0, value=25000.0, step=1000.0)
+        loan_amount = st.number_input("Loan Amount (₹)", min_value=0.0, value=200000.0, step=10000.0)
         interest_rate = st.number_input("Annual Interest Rate (%)", min_value=0.0, value=8.5, step=0.1)
         loan_term = st.number_input("Loan Term (years)", min_value=1, value=5, step=1)
         
@@ -211,7 +211,7 @@ def show_loan_calculator():
                 fig.add_trace(go.Scatter(x=schedule['Payment'], y=schedule['Interest'], 
                                        mode='lines', name='Interest'))
                 fig.update_layout(title="Principal vs Interest Over Time", 
-                                xaxis_title="Payment Number", yaxis_title="Amount ($)")
+                                xaxis_title="Payment Number", yaxis_title="Amount (₹)")
                 st.plotly_chart(fig, use_container_width=True)
                 
             except Exception as e:
@@ -223,8 +223,8 @@ def show_investment_calculator():
     col1, col2 = st.columns([1, 1])
     
     with col1:
-        initial_investment = st.number_input("Initial Investment ($)", min_value=0.0, value=10000.0, step=500.0)
-        monthly_contribution = st.number_input("Monthly Contribution ($)", min_value=0.0, value=500.0, step=50.0)
+        initial_investment = st.number_input("Initial Investment (₹)", min_value=0.0, value=100000.0, step=5000.0)
+        monthly_contribution = st.number_input("Monthly Contribution (₹)", min_value=0.0, value=5000.0, step=500.0)
         annual_return = st.number_input("Expected Annual Return (%)", min_value=0.0, value=7.0, step=0.5)
         investment_period = st.number_input("Investment Period (years)", min_value=1, value=20, step=1)
         
@@ -267,7 +267,7 @@ def show_investment_calculator():
                 fig.add_trace(go.Scatter(x=years, y=values, mode='lines', name='Total Value'))
                 fig.add_trace(go.Scatter(x=years, y=contributions, mode='lines', name='Contributions'))
                 fig.update_layout(title="Investment Growth Over Time", 
-                                xaxis_title="Years", yaxis_title="Amount ($)")
+                                xaxis_title="Years", yaxis_title="Amount (₹)")
                 st.plotly_chart(fig, use_container_width=True)
                 
             except Exception as e:
@@ -281,12 +281,12 @@ def show_retirement_calculator():
     with col1:
         current_age = st.number_input("Current Age", min_value=18, max_value=100, value=30)
         retirement_age = st.number_input("Retirement Age", min_value=current_age+1, max_value=100, value=65)
-        current_income = st.number_input("Current Annual Income ($)", min_value=0.0, value=60000.0, step=1000.0)
-        current_savings = st.number_input("Current Retirement Savings ($)", min_value=0.0, value=25000.0, step=1000.0)
+        current_income = st.number_input("Current Annual Income (₹)", min_value=0.0, value=500000.0, step=10000.0)
+        current_savings = st.number_input("Current Retirement Savings (₹)", min_value=0.0, value=200000.0, step=10000.0)
         
         st.subheader("Retirement Goals")
         income_replacement = st.slider("Income Replacement in Retirement (%)", 40, 100, 80)
-        monthly_contribution = st.number_input("Monthly Retirement Contribution ($)", min_value=0.0, value=500.0, step=50.0)
+        monthly_contribution = st.number_input("Monthly Retirement Contribution (₹)", min_value=0.0, value=5000.0, step=500.0)
         expected_return = st.number_input("Expected Annual Return (%)", min_value=0.0, value=7.0, step=0.5)
     
     with col2:
@@ -333,7 +333,7 @@ def show_retirement_calculator():
                 fig.add_hline(y=result['required_savings'], line_dash="dash", 
                             annotation_text="Required Savings Target")
                 fig.update_layout(title="Retirement Savings Projection", 
-                                xaxis_title="Age", yaxis_title="Savings ($)")
+                                xaxis_title="Age", yaxis_title="Savings (₹)")
                 st.plotly_chart(fig, use_container_width=True)
                 
             except Exception as e:
@@ -345,7 +345,7 @@ def show_compound_interest_calculator():
     col1, col2 = st.columns([1, 1])
     
     with col1:
-        principal = st.number_input("Principal Amount ($)", min_value=0.0, value=5000.0, step=100.0)
+        principal = st.number_input("Principal Amount (₹)", min_value=0.0, value=50000.0, step=1000.0)
         annual_rate = st.number_input("Annual Interest Rate (%)", min_value=0.0, value=5.0, step=0.1)
         years = st.number_input("Time Period (years)", min_value=1, value=10, step=1)
         
@@ -407,7 +407,7 @@ def show_compound_interest_calculator():
                                        y=[principal * (1 + annual_rate/100)**year for year in time_periods], 
                                        mode='lines', name='Simple Interest'))
                 fig.update_layout(title="Compound vs Simple Interest Growth", 
-                                xaxis_title="Years", yaxis_title="Amount ($)")
+                                xaxis_title="Years", yaxis_title="Amount (₹)")
                 st.plotly_chart(fig, use_container_width=True)
                 
             except Exception as e:

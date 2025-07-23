@@ -3,7 +3,7 @@ import numpy as np
 from datetime import datetime, timedelta
 import re
 
-def format_currency(amount, currency_symbol="$"):
+def format_currency(amount, currency_symbol="₹"):
     """Format number as currency string"""
     if amount < 0:
         return f"-{currency_symbol}{abs(amount):,.2f}"

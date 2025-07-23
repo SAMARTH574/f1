@@ -7,6 +7,7 @@ This is a Streamlit-based financial planning application that provides users wit
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.
+Currency display: Indian Rupees (₹) instead of US Dollars ($)
 
 ## System Architecture
 
@@ -44,7 +45,7 @@ Preferred communication style: Simple, everyday language.
 - **Compound Interest Calculator**: Investment growth over time
 
 ### 4. Utility Functions (`utils.py`)
-- **Formatting**: Currency display and number formatting
+- **Formatting**: Currency display in Indian Rupees (₹) and number formatting
 - **Validation**: Input validation for positive numbers and percentages
 - **Calculations**: Core financial mathematics functions
 - **Amortization**: Detailed payment schedule generation
@@ -100,5 +101,13 @@ Preferred communication style: Simple, everyday language.
 - The application uses a modular design for easy maintenance and feature additions
 - Financial calculations include error handling and edge case management
 - The chatbot is configured with responsible AI guidelines for financial advice
-- All currency formatting and validation functions are centralized in utils module
+- All currency formatting displays amounts in Indian Rupees (₹) with appropriate default values
+- All validation functions are centralized in utils module
 - The system is designed to be easily extensible with additional financial tools
+
+## Recent Changes
+
+- **2025-01-23**: Updated currency display from US Dollars ($) to Indian Rupees (₹) throughout the application
+- **2025-01-23**: Adjusted default values in all calculators to reflect Indian currency amounts
+- **2025-01-23**: Updated chart axis labels to show amounts in rupees
+- **2025-01-23**: Migrated from OpenAI to Google Gemini AI for chatbot functionality
