@@ -18,7 +18,7 @@ Preferred communication style: Simple, everyday language.
 
 ### Backend Architecture
 - **Core Logic**: Python-based modular architecture
-- **AI Integration**: OpenAI GPT-4o model for financial advice chatbot
+- **AI Integration**: Google Gemini 2.5 Flash model for financial advice chatbot
 - **Calculations**: Custom mathematical functions for financial computations
 - **Data Processing**: Pandas and NumPy for financial data manipulation
 
@@ -30,10 +30,11 @@ Preferred communication style: Simple, everyday language.
 - **Navigation Options**: AI advisor, mortgage calculator, loan calculator, investment calculator, retirement planning, compound interest calculator
 
 ### 2. Financial Chatbot (`chatbot.py`)
-- **AI Model**: OpenAI GPT-4o (latest model as of May 2024)
+- **AI Model**: Google Gemini 2.5 Flash (latest Gemini model)
 - **System Prompt**: Configured as a knowledgeable financial advisor with appropriate disclaimers
 - **Capabilities**: Budgeting advice, investment guidance, debt management, retirement planning
 - **Safety**: Includes disclaimers about seeking professional financial advice
+- **API Integration**: Uses Google Gemini API with graceful error handling for missing API keys
 
 ### 3. Financial Calculators (`calculators.py`)
 - **Loan Calculator**: Monthly payments, total interest, amortization
@@ -64,11 +65,12 @@ Preferred communication style: Simple, everyday language.
 - `pandas`: Data manipulation and analysis
 - `plotly`: Interactive data visualization
 - `numpy`: Numerical computations
-- `openai`: AI chatbot integration
+- `google-genai`: Google Gemini AI integration
+- `requests`: HTTP client for API calls
 
 ### API Services
-- **OpenAI API**: GPT-4o model for financial advice chatbot
-- **Configuration**: Requires OPENAI_API_KEY environment variable
+- **Google Gemini API**: Gemini 2.5 Flash model for financial advice chatbot
+- **Configuration**: Requires GEMINI_API_KEY environment variable
 
 ## Deployment Strategy
 
@@ -83,8 +85,8 @@ Preferred communication style: Simple, everyday language.
 - **Heroku/Railway**: Container-based deployment options
 
 ### Configuration Requirements
-- Environment variable: `OPENAI_API_KEY`
-- Python version: 3.7+ (recommended 3.9+)
+- Environment variable: `GEMINI_API_KEY`
+- Python version: 3.11+ (current setup)
 - Memory requirements: Moderate (suitable for standard hosting)
 
 ### Security Considerations

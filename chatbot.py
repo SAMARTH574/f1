@@ -11,7 +11,17 @@ class FinancialChatbot:
         # Note that the newest Gemini model series is "gemini-2.5-flash" or "gemini-2.5-pro"
         self.model = "gemini-2.5-flash"
         api_key = os.environ.get("GEMINI_API_KEY")
-        self.client = genai.Client(api_key=api_key)
+        
+        if not api_key:
+            self.client = None
+            self.api_available = False
+        else:
+            try:
+                self.client = genai.Client(api_key=api_key)
+                self.api_available = True
+            except Exception as e:
+                self.client = None
+                self.api_available = False
         
         self.system_prompt = """
         You are a knowledgeable and helpful financial advisor AI assistant. Your role is to provide 
@@ -43,6 +53,9 @@ class FinancialChatbot:
 
     def get_response(self, user_message):
         """Get AI response for user's financial question"""
+        if not self.api_available:
+            return "🔑 **API Key Required**: To use the AI Financial Advisor, please add your Gemini API key to the environment variables. You can get one from https://aistudio.google.com/app/apikey"
+        
         try:
             prompt = f"{self.system_prompt}\n\nUser Question: {user_message}"
             
@@ -58,6 +71,9 @@ class FinancialChatbot:
 
     def get_financial_analysis(self, financial_data):
         """Analyze financial data and provide insights"""
+        if not self.api_available:
+            return "🔑 **API Key Required**: To use the AI Financial Analysis, please add your Gemini API key to the environment variables."
+        
         try:
             prompt = f"""
             {self.system_prompt}
@@ -87,6 +103,9 @@ class FinancialChatbot:
 
     def explain_calculation(self, calculation_type, inputs, results):
         """Explain financial calculations in simple terms"""
+        if not self.api_available:
+            return "🔑 **API Key Required**: To use the AI Calculation Explanation, please add your Gemini API key to the environment variables."
+        
         try:
             prompt = f"""
             {self.system_prompt}
