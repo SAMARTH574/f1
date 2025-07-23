@@ -1,13 +1,17 @@
-import os
 import json
-import requests
+import logging
+import os
+
+from google import genai
+from google.genai import types
 import streamlit as st
 
 class FinancialChatbot:
     def __init__(self):
-        self.model = "llama-3.1-sonar-small-128k-online"
-        self.api_key = os.getenv("PERPLEXITY_API_KEY", "your-api-key-here")
-        self.base_url = "https://api.perplexity.ai/chat/completions"
+        # Note that the newest Gemini model series is "gemini-2.5-flash" or "gemini-2.5-pro"
+        self.model = "gemini-2.5-flash"
+        api_key = os.environ.get("GEMINI_API_KEY")
+        self.client = genai.Client(api_key=api_key)
         
         self.system_prompt = """
         You are a knowledgeable and helpful financial advisor AI assistant. Your role is to provide 
@@ -40,34 +44,14 @@ class FinancialChatbot:
     def get_response(self, user_message):
         """Get AI response for user's financial question"""
         try:
-            headers = {
-                'Authorization': f'Bearer {self.api_key}',
-                'Content-Type': 'application/json'
-            }
+            prompt = f"{self.system_prompt}\n\nUser Question: {user_message}"
             
-            data = {
-                "model": self.model,
-                "messages": [
-                    {"role": "system", "content": self.system_prompt},
-                    {"role": "user", "content": user_message}
-                ],
-                "max_tokens": 1000,
-                "temperature": 0.2,
-                "top_p": 0.9,
-                "return_images": False,
-                "return_related_questions": False,
-                "search_recency_filter": "month",
-                "top_k": 0,
-                "stream": False,
-                "presence_penalty": 0,
-                "frequency_penalty": 1
-            }
+            response = self.client.models.generate_content(
+                model=self.model,
+                contents=prompt
+            )
             
-            response = requests.post(self.base_url, headers=headers, json=data)
-            response.raise_for_status()
-            
-            result = response.json()
-            return result['choices'][0]['message']['content']
+            return response.text or "I apologize, but I'm having trouble processing your request right now. Please try again."
             
         except Exception as e:
             return f"I apologize, but I'm having trouble processing your request right now. Error: {str(e)}. Please try again or contact support if the issue persists."
@@ -76,6 +60,8 @@ class FinancialChatbot:
         """Analyze financial data and provide insights"""
         try:
             prompt = f"""
+            {self.system_prompt}
+            
             Please analyze the following financial information and provide insights and recommendations:
             
             {json.dumps(financial_data, indent=2)}
@@ -89,34 +75,12 @@ class FinancialChatbot:
             Format your response as clear, actionable advice.
             """
             
-            headers = {
-                'Authorization': f'Bearer {self.api_key}',
-                'Content-Type': 'application/json'
-            }
+            response = self.client.models.generate_content(
+                model=self.model,
+                contents=prompt
+            )
             
-            data = {
-                "model": self.model,
-                "messages": [
-                    {"role": "system", "content": self.system_prompt},
-                    {"role": "user", "content": prompt}
-                ],
-                "max_tokens": 1200,
-                "temperature": 0.2,
-                "top_p": 0.9,
-                "return_images": False,
-                "return_related_questions": False,
-                "search_recency_filter": "month",
-                "top_k": 0,
-                "stream": False,
-                "presence_penalty": 0,
-                "frequency_penalty": 1
-            }
-            
-            response = requests.post(self.base_url, headers=headers, json=data)
-            response.raise_for_status()
-            
-            result = response.json()
-            return result['choices'][0]['message']['content']
+            return response.text or "Unable to analyze financial data at this time."
             
         except Exception as e:
             return f"Unable to analyze financial data at this time. Error: {str(e)}"
@@ -125,6 +89,8 @@ class FinancialChatbot:
         """Explain financial calculations in simple terms"""
         try:
             prompt = f"""
+            {self.system_prompt}
+            
             Please explain this {calculation_type} calculation in simple, easy-to-understand terms:
             
             Inputs: {json.dumps(inputs, indent=2)}
@@ -139,34 +105,12 @@ class FinancialChatbot:
             Keep the explanation accessible to someone without extensive financial knowledge.
             """
             
-            headers = {
-                'Authorization': f'Bearer {self.api_key}',
-                'Content-Type': 'application/json'
-            }
+            response = self.client.models.generate_content(
+                model=self.model,
+                contents=prompt
+            )
             
-            data = {
-                "model": self.model,
-                "messages": [
-                    {"role": "system", "content": self.system_prompt},
-                    {"role": "user", "content": prompt}
-                ],
-                "max_tokens": 800,
-                "temperature": 0.2,
-                "top_p": 0.9,
-                "return_images": False,
-                "return_related_questions": False,
-                "search_recency_filter": "month",
-                "top_k": 0,
-                "stream": False,
-                "presence_penalty": 0,
-                "frequency_penalty": 1
-            }
-            
-            response = requests.post(self.base_url, headers=headers, json=data)
-            response.raise_for_status()
-            
-            result = response.json()
-            return result['choices'][0]['message']['content']
+            return response.text or "Unable to explain calculation at this time."
             
         except Exception as e:
             return f"Unable to explain calculation at this time. Error: {str(e)}"
