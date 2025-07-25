@@ -35,20 +35,44 @@ A comprehensive financial planning application built with Python and Streamlit, 
 ## Installation
 
 ### Prerequisites
-- Python 3.11 or higher
-- Google Gemini API key
+- Python 3.8 or higher
+- Google Gemini API key (for AI chatbot features)
 
-### Setup
+### Quick Setup
+
+**Option 1: Automated Setup (Recommended)**
+
+For Windows users:
+```bash
+# Double-click setup.bat or run in Command Prompt:
+setup.bat
+```
+
+For Linux/Mac users:
+```bash
+# Make executable and run:
+chmod +x setup.sh
+./setup.sh
+```
+
+**Option 2: Manual Setup**
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/financial-advisor-ai.git
-cd financial-advisor-ai
+git clone https://github.com/SAMARTH574/f1.git
+cd f1
 ```
 
 2. Install dependencies:
 ```bash
+# Using pip
 pip install -r requirements.txt
+
+# Or install individual packages if requirements.txt fails:
+pip install streamlit plotly pandas numpy google-genai requests
+
+# For Python 3 specifically:
+pip3 install -r requirements.txt
 ```
 
 3. Set up environment variables:
@@ -142,6 +166,51 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## Disclaimer
 
 This application provides general financial information and should not be considered as professional financial advice. Always consult with qualified financial advisors before making important financial decisions.
+
+## Troubleshooting
+
+### Common Issues
+
+**1. ModuleNotFoundError: No module named 'plotly'**
+```bash
+# Solution 1: Install plotly specifically
+pip install plotly
+
+# Solution 2: Reinstall all requirements
+pip install -r requirements.txt
+
+# Solution 3: Use Python 3 explicitly
+pip3 install plotly pandas streamlit numpy
+```
+
+**2. Command 'streamlit' not found**
+```bash
+# Install streamlit globally
+pip install streamlit
+
+# Or run with python module
+python -m streamlit run app.py
+```
+
+**3. Python version issues**
+- Ensure you have Python 3.8 or higher
+- Use `python3` instead of `python` on some systems
+- Check version: `python --version` or `python3 --version`
+
+**4. Virtual Environment (Recommended)**
+```bash
+# Create virtual environment
+python -m venv financial_advisor_env
+
+# Activate (Windows)
+financial_advisor_env\Scripts\activate
+
+# Activate (Linux/Mac)
+source financial_advisor_env/bin/activate
+
+# Install requirements
+pip install -r requirements.txt
+```
 
 ## Support
 
