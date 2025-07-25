@@ -9,11 +9,26 @@ def loan_calculator(principal, annual_rate, years):
         monthly_rate = annual_rate / 100 / 12
         num_payments = years * 12
         
+        # Validate inputs
+        if principal <= 0 or years <= 0:
+            raise ValueError("Principal and years must be positive")
+        if annual_rate < 0:
+            raise ValueError("Interest rate cannot be negative")
+        if num_payments > 1200:  # Limit to 100 years
+            raise ValueError("Loan term too long (max 100 years)")
+        
         if monthly_rate == 0:
             monthly_payment = principal / num_payments
         else:
-            monthly_payment = principal * (monthly_rate * (1 + monthly_rate)**num_payments) / \
-                            ((1 + monthly_rate)**num_payments - 1)
+            # Use more stable calculation to avoid overflow
+            try:
+                power_term = (1 + monthly_rate)**num_payments
+                if power_term > 1e10:  # Prevent overflow
+                    raise OverflowError("Interest rate and term combination too large")
+                monthly_payment = principal * (monthly_rate * power_term) / (power_term - 1)
+            except OverflowError:
+                # Fallback calculation for very large terms
+                monthly_payment = principal * monthly_rate
         
         total_paid = monthly_payment * num_payments
         total_interest = total_paid - principal
