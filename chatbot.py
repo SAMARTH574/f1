@@ -2,25 +2,23 @@ import json
 import logging
 import os
 
-from google import genai
-from google.genai import types
+import google.generativeai as genai
 import streamlit as st
 
 class FinancialChatbot:
     def __init__(self):
-        # Note that the newest Gemini model series is "gemini-2.5-flash" or "gemini-2.5-pro"
-        self.model = "gemini-2.5-flash"
+        # Note that the newest Gemini model series is "gemini-1.5-pro" or "gemini-1.5-flash"
+        self.model = "gemini-1.5-flash"
         api_key = os.environ.get("GEMINI_API_KEY")
         
         if not api_key:
-            self.client = None
             self.api_available = False
         else:
             try:
-                self.client = genai.Client(api_key=api_key)
+                genai.configure(api_key=api_key)
+                self.model_instance = genai.GenerativeModel(self.model)
                 self.api_available = True
             except Exception as e:
-                self.client = None
                 self.api_available = False
         
         self.system_prompt = """
@@ -39,30 +37,27 @@ class FinancialChatbot:
 
         Topics you can help with:
         - Budgeting and expense tracking
-        - Savings strategies and emergency funds
-        - Basic investing principles
+        - Saving strategies and emergency funds
+        - Investment basics and portfolio management
         - Debt management and payoff strategies
-        - Retirement planning basics
-        - Insurance needs
-        - Credit score improvement
-        - Tax planning fundamentals
-        - Financial goal setting
+        - Retirement planning and 401(k) advice
+        - Insurance needs assessment
+        - Tax planning basics
+        - Home buying and mortgage decisions
+        - General financial goal setting
 
         Always include appropriate disclaimers about seeking professional advice for specific situations.
         """
 
     def get_response(self, user_message):
         """Get AI response for user's financial question"""
-        if not self.api_available or not self.client:
+        if not self.api_available:
             return "🔑 **API Key Required**: To use the AI Financial Advisor, please add your Gemini API key to the environment variables. You can get one from https://aistudio.google.com/app/apikey"
         
         try:
             prompt = f"{self.system_prompt}\n\nUser Question: {user_message}"
             
-            response = self.client.models.generate_content(
-                model=self.model,
-                contents=prompt
-            )
+            response = self.model_instance.generate_content(prompt)
             
             return response.text or "I apologize, but I'm having trouble processing your request right now. Please try again."
             
@@ -71,7 +66,7 @@ class FinancialChatbot:
 
     def get_financial_analysis(self, financial_data):
         """Analyze financial data and provide insights"""
-        if not self.api_available or not self.client:
+        if not self.api_available:
             return "🔑 **API Key Required**: To use the AI Financial Analysis, please add your Gemini API key to the environment variables."
         
         try:
@@ -91,10 +86,7 @@ class FinancialChatbot:
             Format your response as clear, actionable advice.
             """
             
-            response = self.client.models.generate_content(
-                model=self.model,
-                contents=prompt
-            )
+            response = self.model_instance.generate_content(prompt)
             
             return response.text or "Unable to analyze financial data at this time."
             
@@ -103,7 +95,7 @@ class FinancialChatbot:
 
     def explain_calculation(self, calculation_type, inputs, results):
         """Explain financial calculations in simple terms"""
-        if not self.api_available or not self.client:
+        if not self.api_available:
             return "🔑 **API Key Required**: To use the AI Calculation Explanation, please add your Gemini API key to the environment variables."
         
         try:
@@ -124,10 +116,7 @@ class FinancialChatbot:
             Keep the explanation accessible to someone without extensive financial knowledge.
             """
             
-            response = self.client.models.generate_content(
-                model=self.model,
-                contents=prompt
-            )
+            response = self.model_instance.generate_content(prompt)
             
             return response.text or "Unable to explain calculation at this time."
             

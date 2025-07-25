@@ -50,7 +50,7 @@ def check_imports():
     }
     
     optional_packages = {
-        'google.genai': 'Google Gemini AI (optional for chatbot)'
+        'google.generativeai': 'Google Generative AI (optional for chatbot)'
     }
     
     all_ok = True
