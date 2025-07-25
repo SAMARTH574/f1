@@ -75,9 +75,26 @@ pip install streamlit plotly pandas numpy google-genai requests
 pip3 install -r requirements.txt
 ```
 
-3. Set up environment variables:
+3. Set up your Gemini API key:
+
+**Get your API key:**
+- Go to [Google AI Studio](https://aistudio.google.com/app/apikey)
+- Create a new API key
+- Copy the API key
+
+**Add to environment:**
 ```bash
-export GEMINI_API_KEY="your_gemini_api_key_here"
+# Option 1: Create .env file (recommended)
+echo "GEMINI_API_KEY=your_api_key_here" > .env
+
+# Option 2: Set environment variable (Windows Command Prompt)
+set GEMINI_API_KEY=your_api_key_here
+
+# Option 3: Set environment variable (Windows PowerShell)
+$env:GEMINI_API_KEY="your_api_key_here"
+
+# Option 4: Set environment variable (Linux/Mac)
+export GEMINI_API_KEY=your_api_key_here
 ```
 
 4. Run the application:

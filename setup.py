@@ -41,6 +41,26 @@ def test_imports():
         print(f"❌ Import error: {e}")
         return False
 
+def setup_env_file():
+    """Set up environment file if it doesn't exist"""
+    if not os.path.exists('.env'):
+        if os.path.exists('.env.example'):
+            print("📋 Creating .env file from template...")
+            with open('.env.example', 'r') as src, open('.env', 'w') as dst:
+                dst.write(src.read())
+            print("✅ .env file created! Please add your Gemini API key.")
+            return False
+        else:
+            print("⚠️  .env.example not found. Creating basic .env file...")
+            with open('.env', 'w') as f:
+                f.write("# Add your Gemini API key here\n")
+                f.write("GEMINI_API_KEY=your_api_key_here\n")
+            print("✅ .env file created! Please add your Gemini API key.")
+            return False
+    else:
+        print("✅ .env file already exists")
+        return True
+
 def main():
     """Main setup function"""
     print("🚀 Setting up Financial Advisor AI...")
@@ -56,8 +76,15 @@ def main():
         print("⚠️  Some imports failed. Try running: pip install -r requirements.txt")
         sys.exit(1)
     
+    env_ready = setup_env_file()
+    
     print("\n🎉 Setup completed successfully!")
-    print("To run the application: streamlit run app.py")
+    if not env_ready:
+        print("\n🔑 NEXT STEP: Add your Gemini API key to the .env file")
+        print("   1. Get your API key from: https://aistudio.google.com/app/apikey")
+        print("   2. Open .env file and replace 'your_api_key_here' with your actual key")
+        print("   3. Save the file")
+    print("\n🚀 To run the application: streamlit run app.py")
 
 if __name__ == "__main__":
     main()

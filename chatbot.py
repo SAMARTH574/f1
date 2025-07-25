@@ -1,9 +1,25 @@
 import json
 import logging
 import os
+from pathlib import Path
 
 import google.generativeai as genai
 import streamlit as st
+
+# Load environment variables from .env file
+def load_env_file():
+    """Load environment variables from .env file if it exists"""
+    env_file = Path('.env')
+    if env_file.exists():
+        with open(env_file, 'r') as f:
+            for line in f:
+                line = line.strip()
+                if line and not line.startswith('#') and '=' in line:
+                    key, value = line.split('=', 1)
+                    os.environ[key.strip()] = value.strip()
+
+# Load .env file when module is imported
+load_env_file()
 
 class FinancialChatbot:
     def __init__(self):
