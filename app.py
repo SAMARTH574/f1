@@ -10,9 +10,6 @@ from dotenv import load_dotenv
 # Load environment variables from .env file
 load_dotenv()
 
-# Debug: Check if API key is loaded
-print("DEBUG: GEMINI_API_KEY loaded =", bool(os.environ.get("GEMINI_API_KEY")))
-
 # Import custom modules
 from chatbot import FinancialChatbot
 from calculators import (
