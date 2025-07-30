@@ -30,6 +30,10 @@ if 'chat_history' not in st.session_state:
 if 'chatbot' not in st.session_state:
     st.session_state.chatbot = FinancialChatbot()
 
+# Ensure chatbot is properly initialized with API key
+if not st.session_state.chatbot.api_available:
+    st.session_state.chatbot = FinancialChatbot()
+
 def main():
     # Header
     st.title("💰 Financial Advisor AI")
@@ -73,6 +77,11 @@ def main():
 
 def show_chatbot_page():
     st.header("🤖 AI Financial Advisor Chat")
+    
+    # Debug: Show API status
+    if not st.session_state.chatbot.api_available:
+        st.error("🔑 **API Key Issue**: The AI Financial Advisor is not properly configured. Please check your API key setup.")
+        st.info("To fix this issue:\n1. Ensure you have a valid Gemini API key\n2. Check that the `.env` file contains your API key\n3. Restart the application")
     
     # Chat interface
     col1, col2 = st.columns([3, 1])
