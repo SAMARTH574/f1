@@ -17,7 +17,7 @@ def load_env_file():
                 if line and not line.startswith('#') and '=' in line:
                     key, value = line.split('=', 1)
                     os.environ[key.strip()] = value.strip()
-        print(f"Loaded environment variables from .env file. GEMINI_API_KEY present: {'GEMINI_API_KEY' in os.environ}")
+
 
 # Load .env file when module is imported
 load_env_file()
@@ -28,20 +28,15 @@ class FinancialChatbot:
         self.model = "gemini-1.5-flash"
         api_key = os.environ.get("GEMINI_API_KEY")
         
-        print(f"Initializing FinancialChatbot. API key present: {bool(api_key)}")
-        
         if not api_key:
             self.api_available = False
-            print("No API key found in environment variables")
         else:
             try:
                 genai.configure(api_key=api_key)
                 self.model_instance = genai.GenerativeModel(self.model)
                 self.api_available = True
-                print("API key configured successfully")
             except Exception as e:
                 self.api_available = False
-                print(f"Error configuring API key: {e}")
         
         self.system_prompt = """
         You are a knowledgeable and helpful financial advisor AI assistant. Your role is to provide 
