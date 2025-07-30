@@ -10,6 +10,10 @@ from dotenv import load_dotenv
 # Load environment variables from .env file
 load_dotenv()
 
+# Set API key directly if not found in environment
+if not os.environ.get("GEMINI_API_KEY"):
+    os.environ["GEMINI_API_KEY"] = "AIzaSyCTcHHqg4scEU4UqX8tNOnJS0HORHM9VxM"
+
 # Import custom modules
 from chatbot import FinancialChatbot
 from calculators import (
