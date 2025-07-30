@@ -4,6 +4,14 @@ import plotly.express as px
 import plotly.graph_objects as go
 from datetime import datetime, date
 import numpy as np
+import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
+
+# Debug: Check if API key is loaded
+print("DEBUG: GEMINI_API_KEY loaded =", bool(os.environ.get("GEMINI_API_KEY")))
 
 # Import custom modules
 from chatbot import FinancialChatbot
