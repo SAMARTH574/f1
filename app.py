@@ -37,16 +37,15 @@ st.set_page_config(
 if 'chat_history' not in st.session_state:
     st.session_state.chat_history = []
 if 'chatbot' not in st.session_state:
-    st.session_state.chatbot = FinancialChatbot()
+    st.session_state.chatbot = None
 
-# Force re-initialization of chatbot to ensure API key is loaded
-print("DEBUG: Checking chatbot API availability...")
-if not st.session_state.chatbot.api_available:
-    print("DEBUG: Re-initializing chatbot due to API unavailability")
-    st.session_state.chatbot = FinancialChatbot()
-    print(f"DEBUG: Chatbot API available after re-initialization: {st.session_state.chatbot.api_available}")
-else:
-    print("DEBUG: Chatbot API is available")
+# Initialize chatbot only when needed
+def get_chatbot():
+    if st.session_state.chatbot is None or not st.session_state.chatbot.api_available:
+        print("DEBUG: Initializing chatbot...")
+        st.session_state.chatbot = FinancialChatbot()
+        print(f"DEBUG: Chatbot API available: {st.session_state.chatbot.api_available}")
+    return st.session_state.chatbot
 
 def main():
     # Header
@@ -92,8 +91,11 @@ def main():
 def show_chatbot_page():
     st.header("🤖 AI Financial Advisor Chat")
     
+    # Get chatbot instance
+    chatbot = get_chatbot()
+    
     # Debug: Show API status
-    if not st.session_state.chatbot.api_available:
+    if not chatbot.api_available:
         st.error("🔑 **API Key Issue**: The AI Financial Advisor is not properly configured. Please check your API key setup.")
         st.info("To fix this issue:\n1. Ensure you have a valid Gemini API key\n2. Check that the `.env` file contains your API key\n3. Restart the application")
     
@@ -122,7 +124,7 @@ def show_chatbot_page():
                 
                 # Get AI response
                 with st.spinner("Thinking..."):
-                    response = st.session_state.chatbot.get_response(user_input)
+                    response = chatbot.get_response(user_input)
                     st.session_state.chat_history.append(("assistant", response))
                 
                 st.rerun()
@@ -147,7 +149,7 @@ def show_chatbot_page():
             if st.button(topic, key=f"topic_{topic}"):
                 st.session_state.chat_history.append(("user", topic))
                 with st.spinner("Thinking..."):
-                    response = st.session_state.chatbot.get_response(topic)
+                    response = chatbot.get_response(topic)
                     st.session_state.chat_history.append(("assistant", response))
                 st.rerun()
 
