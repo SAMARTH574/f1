@@ -1,32 +1,78 @@
 # Financial Advisor AI
 
-A comprehensive financial planning application built with Python and Streamlit, featuring AI-powered financial advice and interactive calculators.
+A comprehensive financial planning application with AI-powered advice, calculators, and analysis tools.
 
 ## Features
 
-### 🤖 AI Financial Advisor
-- Intelligent chatbot powered by Google Gemini AI
-- Personalized financial advice and guidance
-- Quick topic suggestions for common financial questions
-- Responsible AI with appropriate disclaimers
+- 🤖 **AI Financial Advisor**: Get personalized financial advice using Google's Gemini AI
+- 🏠 **Mortgage Calculator**: Calculate mortgage payments and amortization schedules
+- 💳 **Loan Calculator**: Analyze loan terms and payment schedules
+- 📈 **Investment Calculator**: Plan your investment strategy
+- 🏖️ **Retirement Planning**: Calculate retirement savings needs
+- 💰 **Compound Interest**: Understand the power of compound interest
 
-### 🧮 Financial Calculators
-- **Mortgage Calculator**: Home loan payments with taxes and insurance
-- **Loan Calculator**: Monthly payments and amortization schedules
-- **Investment Calculator**: Growth projections with different strategies
-- **Retirement Planning**: Savings targets and timeline analysis
-- **Compound Interest**: Compare different compounding frequencies
+## Quick Start
 
-### 📊 Interactive Visualizations
-- Dynamic charts using Plotly
-- Payment breakdowns and growth projections
-- Amortization schedules
-- Investment comparison charts
+### Prerequisites
 
-### 🇮🇳 Localized for India
-- All amounts displayed in Indian Rupees (₹)
-- Realistic default values for Indian financial scenarios
-- Appropriate interest rates and financial parameters
+- Python 3.8 or higher
+- Google Gemini API key
+
+### Installation
+
+1. Clone the repository:
+```bash
+git clone <repository-url>
+cd financial-advisor-ai
+```
+
+2. Install dependencies:
+```bash
+pip install -r requirements.txt
+```
+
+3. Set up your API key:
+   - Copy `.env.example` to `.env`
+   - Add your Gemini API key to the `.env` file:
+   ```
+   GEMINI_API_KEY=your_actual_api_key_here
+   ```
+   - Get your API key from: https://aistudio.google.com/app/apikey
+
+4. Run the application:
+```bash
+streamlit run app.py
+```
+
+## API Key Setup
+
+The AI Financial Advisor requires a Google Gemini API key to function. Follow these steps:
+
+1. Visit https://aistudio.google.com/app/apikey
+2. Create a new API key
+3. Copy the `.env.example` file to `.env`
+4. Replace `your_gemini_api_key_here` with your actual API key
+
+Example `.env` file:
+```
+GEMINI_API_KEY=AIzaSyCTcHHqg4scEU4UqX8tNOnJS0HORHM9VxM
+```
+
+## Usage
+
+1. **AI Financial Advisor**: Ask questions about budgeting, investing, debt management, and more
+2. **Calculators**: Use the various financial calculators to plan your finances
+3. **Analysis**: Get insights and recommendations based on your financial data
+
+## Security
+
+- The `.env` file is automatically ignored by git to protect your API key
+- Never commit your actual API key to version control
+- Use the `.env.example` file as a template
+
+## Disclaimer
+
+This application provides general financial information and should not be considered as professional financial advice. Please consult with a qualified financial advisor for personalized guidance.
 
 ## Screenshots
 
