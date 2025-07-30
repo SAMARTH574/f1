@@ -10,6 +10,10 @@ from dotenv import load_dotenv
 # Load environment variables from .env file
 load_dotenv()
 
+# Debug: Check if API key is loaded
+api_key_loaded = bool(os.environ.get("GEMINI_API_KEY"))
+print(f"DEBUG: Environment loaded - GEMINI_API_KEY present: {api_key_loaded}")
+
 # Import custom modules
 from chatbot import FinancialChatbot
 from calculators import (
@@ -35,9 +39,14 @@ if 'chat_history' not in st.session_state:
 if 'chatbot' not in st.session_state:
     st.session_state.chatbot = FinancialChatbot()
 
-# Ensure chatbot is properly initialized with API key
+# Force re-initialization of chatbot to ensure API key is loaded
+print("DEBUG: Checking chatbot API availability...")
 if not st.session_state.chatbot.api_available:
+    print("DEBUG: Re-initializing chatbot due to API unavailability")
     st.session_state.chatbot = FinancialChatbot()
+    print(f"DEBUG: Chatbot API available after re-initialization: {st.session_state.chatbot.api_available}")
+else:
+    print("DEBUG: Chatbot API is available")
 
 def main():
     # Header
